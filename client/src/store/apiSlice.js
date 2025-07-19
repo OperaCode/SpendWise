@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const baseURI = "http://localhost:3000"; 
+const baseURI = "https://trackit-tfj4.onrender.com"; 
+
 
 export const apiSlice = createApi({
   reducerPath: 'api', 
