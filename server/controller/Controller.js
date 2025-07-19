@@ -56,12 +56,31 @@ async function getTransaction(req, res){
 }
 
 //  delete: http://localhost:8080/api/transaction
-async function deleteTransaction(req, res){
-   if (!req.body) res.status(400).json({ message: "Request body not Found"});
-   await model.Transaction.deleteOne(req.body, function(err){
-       if(!err) res.json("Record Deleted...!");
-   }).clone().catch(function(err){ res.json("Error while deleting Transaction Record")});
+// async function deleteTransaction(req, res){
+//    if (!req.body) res.status(400).json({ message: "Request body not Found"});
+//    await model.Transaction.deleteOne(req.body, function(err){
+//        if(!err) res.json("Record Deleted...!");
+//    }).clone().catch(function(err){ res.json("Error while deleting Transaction Record")});
+// }
+
+async function deleteTransaction(req, res) {
+  const { _id } = req.body;
+  if (!_id) {
+    return res.status(400).json({ message: "Transaction ID required" });
+  }
+
+  try {
+    const result = await model.Transaction.deleteOne({ _id });
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "Transaction not found" });
+    }
+    return res.status(200).json({ message: "Record Deleted" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Error deleting transaction" });
+  }
 }
+
 
 //  get: http://localhost:8080/api/labels
 async function getLabels(req, res){
