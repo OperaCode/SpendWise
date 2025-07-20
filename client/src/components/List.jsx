@@ -10,7 +10,7 @@ export default function List() {
     if (!e.target.dataset.id) return;
     await deleteTransaction({ _id: e.target.dataset.id });
     console.log("Deleted, refetching...");
-    refetch(); // force refresh
+    refetch(); 
   };
 
   console.log("Labels data:", data);
